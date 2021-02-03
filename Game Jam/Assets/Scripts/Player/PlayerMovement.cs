@@ -103,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    AudioManager.Instance.PlayClip("Jump_1");
                     jumpCount++;
                     G = jumpForce;
                 }
