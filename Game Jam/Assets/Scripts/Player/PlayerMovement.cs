@@ -119,6 +119,12 @@ public class PlayerMovement : MonoBehaviour
                 playerModel.transform.rotation = Quaternion.Euler(playerModel.transform.rotation.x, 0, playerModel.transform.rotation.z);
 
             }
+
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                playerModel.transform.rotation = Quaternion.Euler(playerModel.transform.rotation.x, 180, playerModel.transform.rotation.z);
+
+            }
         }
         
     }
