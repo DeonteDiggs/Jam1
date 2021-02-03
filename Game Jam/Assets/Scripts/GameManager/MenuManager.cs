@@ -95,7 +95,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void Pause() {
-        //print(pauseMenu);
+        
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         isInPauseMenu = true;
