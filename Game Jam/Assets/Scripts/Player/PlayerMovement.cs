@@ -34,12 +34,12 @@ public class PlayerMovement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
             RaycastHit rayHit;
-            if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .2f, ~9))
+            if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .2f, 1 << LayerMask.NameToLayer("Ground")))
             {
                 jumpCount = 0;
 
             }
-            if (Physics.Raycast(head.transform.position, transform.up, out rayHit, .3f, ~9))
+            if (Physics.Raycast(head.transform.position, transform.up, out rayHit, .3f, 1 << LayerMask.NameToLayer("Ground")))
             {
                 G = 0;
             }
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxis("Horizontal") != 0)
             {
                 RaycastHit rayHit;
-                if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .3f, ~9))
+                if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .3f, 1 << LayerMask.NameToLayer("Ground")))
                 {
                     anim.SetBool("Walking", true);
                 }

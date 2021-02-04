@@ -26,6 +26,30 @@ public class PlayerController : MonoBehaviour
 
     public PlayerType playerType;
 
+    
+    private void OnTriggerStay(Collider other)
+    {
+        Debug.Log(other.gameObject.layer);
+        if (other.gameObject.layer == 9)
+        {
+            InteractableObject IO = other.gameObject.GetComponent<InteractableObject>();
+            
+            if (IO.type == InteractableObject.Type.Active)
+            {
+                KeyCode k = IO.keyCode;
+                if (Input.GetKeyDown(k))
+                {
+                    IO.interact();
+                }
+            }
+
+            if (IO.type == InteractableObject.Type.Passive)
+            {
+                IO.interact();
+            }
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -163,6 +163,12 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: CantUse
+    clip: {fileID: 8300000, guid: 6db034dd7bc828343b7eaf5f8ec62c72, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &54961161
 Transform:
   m_ObjectHideFlags: 0
@@ -946,6 +952,7 @@ GameObject:
   - component: {fileID: 873514894}
   - component: {fileID: 873514896}
   - component: {fileID: 873514893}
+  - component: {fileID: 873514897}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1026,6 +1033,19 @@ MonoBehaviour:
   playerModel: {fileID: 897288963}
   anim: {fileID: 897288964}
   walking: {fileID: 8349542763059015795, guid: 7b243709d87bb6c4fad26fa5ff8feaa5, type: 3}
+--- !u!114 &873514897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873514892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33bde014ab11d9747b2deaed7cad6b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerType: 2
 --- !u!1 &897288963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7b243709d87bb6c4fad26fa5ff8feaa5,
