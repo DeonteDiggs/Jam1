@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
@@ -29,11 +28,16 @@ public class PlayerController : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.gameObject.layer);
         if (other.gameObject.layer == 9)
         {
             InteractableObject IO = other.gameObject.GetComponent<InteractableObject>();
-            
+            if (IO.characterUse != this.playerType)
+            {
+                Debug.Log("Access Denied");
+                return;
+            }
+
+            Debug.Log("Access Granted");
             if (IO.type == InteractableObject.Type.Active)
             {
                 KeyCode k = IO.keyCode;

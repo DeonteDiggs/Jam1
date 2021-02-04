@@ -17,6 +17,8 @@ public class InteractableObject : MonoBehaviour
         Passive
     }
 
+    public PlayerController.PlayerType characterUse;
+
     public Type type;
     public void interact()
     {

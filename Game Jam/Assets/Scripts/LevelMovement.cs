@@ -53,7 +53,7 @@ public class LevelMovement : MonoBehaviour
         {
             RotateMap(dir, rotationSpeed);
         }
-        Debug.Log(transform.rotation);
+
     }
 
     void RotateMap(float rotAmount, float rotSpeed)
