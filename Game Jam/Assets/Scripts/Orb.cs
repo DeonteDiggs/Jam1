@@ -16,6 +16,7 @@ public class Orb : MonoBehaviour
 
     private void Start()
     {
+        
         menuManager = FindObjectOfType<MenuManager>();
 
         maxOrbCount = FindObjectsOfType<Orb>().Length;

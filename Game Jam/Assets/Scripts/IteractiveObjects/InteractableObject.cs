@@ -11,6 +11,7 @@ public class InteractableObject : MonoBehaviour
     public int numberOfUses;
     public int allowedUses;
     public bool UnlimitedUse;
+    public bool anyCharacterCanUse;
     public enum Type
     {
         Active,

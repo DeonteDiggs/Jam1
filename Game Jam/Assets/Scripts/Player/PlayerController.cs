@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-
+    public Vector3 LastCheckpoint;
     private void Awake()
     {
         if (Instance != null)
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.layer == 9)
         {
             InteractableObject IO = other.gameObject.GetComponent<InteractableObject>();
-            if (IO.characterUse != this.playerType)
+            if (IO.characterUse != this.playerType && !IO.anyCharacterCanUse)
             {
                 Debug.Log("Access Denied");
                 return;

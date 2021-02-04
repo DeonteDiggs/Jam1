@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Save : MonoBehaviour
 {
     [SerializeField] GameObject Player;
@@ -52,4 +51,7 @@ public class Save : MonoBehaviour
         PlayerPrefs.SetInt("Score", score);
         PlayerPrefs.Save();
     }
+
+   
+    
 }
