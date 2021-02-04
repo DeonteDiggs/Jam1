@@ -21,7 +21,7 @@ public class MenuManager : MonoBehaviour
 
     [Header("Options Menu")]
     [SerializeField] private GameObject optionsMenu;
-    
+    private bool isInOptions = false;
 
     [Header("Victory Screen")]
     [SerializeField] private GameObject victoryScreen;
@@ -29,13 +29,13 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isMainMenu)
+        if (Input.GetKeyDown(KeyCode.Escape) && isInOptions && (!isInPauseMenu || !isMainMenu))
             BackToPreviousMenu();
 
-        if (Input.GetKeyDown(KeyCode.Escape) && isInPauseMenu == false)
+        else if (Input.GetKeyDown(KeyCode.Escape) && !isInPauseMenu && isInGame)
             Pause();
         
-        if (Input.GetKeyDown(KeyCode.Escape) && isInGame && isInPauseMenu == true)
+        else if (Input.GetKeyDown(KeyCode.Escape) && isInGame && isInPauseMenu)
             Resume();
     }
 
@@ -54,24 +54,36 @@ public class MenuManager : MonoBehaviour
     
     public void Options()
     {
-        if(isMainMenu)
+        if (isMainMenu)
+        {
             optionsMenu.SetActive(true);
             mainMenu.SetActive(false);
-        
-        if(isInGame)
+            isInOptions = true;
+        }
+
+        if (isInGame)
+        {
             optionsMenu.SetActive(true);
             pauseMenu.SetActive(false);
+            isInOptions = true;
+        }
     }
 
     public void BackToPreviousMenu() {
-        
+
         if (isMainMenu)
+        {
             optionsMenu.SetActive(false);
             mainMenu.SetActive(true);
+            isInOptions = false;
+        }
 
-        if (isInGame)
-            optionsMenu.SetActive(true);
-            pauseMenu.SetActive(false);
+        if (isInGame )
+        {
+            optionsMenu.SetActive(false);
+            pauseMenu.SetActive(true);
+            isInOptions = false;
+        } 
     }
 
     public void Victory() => victoryScreen.SetActive(true);
@@ -83,7 +95,7 @@ public class MenuManager : MonoBehaviour
     }
 
     public void Pause() {
-        print(pauseMenu);
+        
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         isInPauseMenu = true;
