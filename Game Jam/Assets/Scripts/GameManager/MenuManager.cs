@@ -26,6 +26,9 @@ public class MenuManager : MonoBehaviour
     [Header("Victory Screen")]
     [SerializeField] private GameObject victoryScreen;
     
+    [Header("Lose Screen")]
+    [SerializeField] private GameObject loseScreen;
+    
 
     private void Update()
     {
@@ -100,5 +103,9 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 0;
         isInPauseMenu = true;
     }
+
+    public void TryAgain() => CurrentLevel();
+    
+    public void LoseScreen() => loseScreen.SetActive(true);
     
 }
