@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     CharacterController charCont;
     public float playerSpeed;
     public float gravity;
@@ -14,17 +15,26 @@ public class PlayerMovement : MonoBehaviour
     public int jumpCount;
     public GameObject feet;
     public GameObject head;
+    public GameObject playerModel;
+    public Animator anim;
+
+    #region Animations
+    public AnimationClip walking;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         charCont = GetComponent<CharacterController>();
+        AnimatorOverrideController AOC = new AnimatorOverrideController(anim.runtimeAnimatorController);
+        anim.runtimeAnimatorController = AOC;
+        AOC["Walking"] = walking;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
             RaycastHit rayHit;
-            if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .3f, ~9))
+            if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .2f, ~9))
             {
                 jumpCount = 0;
 
@@ -58,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!LevelMovement.Instance.rotating)
         {
+            
             G -= gravity;
             if (G <= -9.8)
             {
@@ -73,13 +84,46 @@ public class PlayerMovement : MonoBehaviour
             moveDir += new Vector3(0, G * Time.deltaTime, 0);
 
             charCont.Move(moveDir);
+
+            if (Input.GetAxis("Horizontal") != 0)
+            {
+                RaycastHit rayHit;
+                if (Physics.Raycast(feet.transform.position, -transform.up, out rayHit, .3f, ~9))
+                {
+                    anim.SetBool("Walking", true);
+                }
+                
+            } else
+            {
+                anim.SetBool("Walking", false);
+
+            }
+
             if (jumpCount < 2)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    AudioManager.Instance.PlayClip("Jump_1");
                     jumpCount++;
                     G = jumpForce;
                 }
+            }
+
+            if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1)
+            {
+                playerModel.transform.rotation = Quaternion.Euler(playerModel.transform.rotation.x, 90 * Input.GetAxisRaw("Horizontal"), playerModel.transform.rotation.z);
+            }
+
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                playerModel.transform.rotation = Quaternion.Euler(playerModel.transform.rotation.x, 0, playerModel.transform.rotation.z);
+
+            }
+
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                playerModel.transform.rotation = Quaternion.Euler(playerModel.transform.rotation.x, 180, playerModel.transform.rotation.z);
+
             }
         }
         
