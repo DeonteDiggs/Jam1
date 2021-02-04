@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    
+
     [Header("Change Level")]
     [SerializeField] private int currentLevel = 0;
     [SerializeField] private int nextLevel = 0;
@@ -21,84 +22,85 @@ public class MenuManager : MonoBehaviour
 
     [Header("Options Menu")]
     [SerializeField] private GameObject optionsMenu;
-    private bool isInOptions = false;
 
     [Header("Victory Screen")]
     [SerializeField] private GameObject victoryScreen;
-    
+
+    [Header("In Game UI")]
+    [SerializeField] int score = 0;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isInOptions && (!isInPauseMenu || !isMainMenu))
+        if (Input.GetKeyDown(KeyCode.Escape) && isMainMenu)
             BackToPreviousMenu();
 
-        else if (Input.GetKeyDown(KeyCode.Escape) && !isInPauseMenu && isInGame)
+        if (Input.GetKeyDown(KeyCode.Escape) && isInPauseMenu == false)
             Pause();
-        
-        else if (Input.GetKeyDown(KeyCode.Escape) && isInGame && isInPauseMenu)
+
+        if (Input.GetKeyDown(KeyCode.Escape) && isInGame && isInPauseMenu == true)
             Resume();
     }
 
+    public void SetScore(int s) {
+
+        score = s;
+
+        GetComponentInChildren<Text>().text = score.ToString();
+
+        Save.SaveData(score);
+    }
+
     public void NextLevel() => SceneManager.LoadScene(nextLevel);
-  
-    
+
+
     public void CurrentLevel() => SceneManager.LoadScene(currentLevel);
-    
-    
+
+
     public void BackToMainMenu() => SceneManager.LoadScene(0);
-    
+
 
     public void QuitGame() => Application.Quit();
-    
+
     public void PlayGame() => NextLevel();
-    
+
     public void Options()
     {
         if (isMainMenu)
-        {
             optionsMenu.SetActive(true);
-            mainMenu.SetActive(false);
-            isInOptions = true;
-        }
+        mainMenu.SetActive(false);
 
         if (isInGame)
-        {
             optionsMenu.SetActive(true);
-            pauseMenu.SetActive(false);
-            isInOptions = true;
-        }
+        pauseMenu.SetActive(false);
     }
 
-    public void BackToPreviousMenu() {
+    public void BackToPreviousMenu()
+    {
 
         if (isMainMenu)
-        {
             optionsMenu.SetActive(false);
-            mainMenu.SetActive(true);
-            isInOptions = false;
-        }
+        mainMenu.SetActive(true);
 
-        if (isInGame )
-        {
-            optionsMenu.SetActive(false);
-            pauseMenu.SetActive(true);
-            isInOptions = false;
-        } 
+        if (isInGame)
+            optionsMenu.SetActive(true);
+        pauseMenu.SetActive(false);
     }
 
     public void Victory() => victoryScreen.SetActive(true);
 
-    public void Resume() {
+    public void Resume()
+    {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
         isInPauseMenu = false;
     }
 
-    public void Pause() {
-        
+    public void Pause()
+    {
+        print(pauseMenu);
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         isInPauseMenu = true;
     }
-    
+
 }
